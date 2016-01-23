@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta charset="utf-8">
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:url" content="http://imrehg.github.io/palmyramap/" />
+		<meta property="og:image" content="http://imrehg.github.io/palmyramap/palmyra2_rot.png" />
+		<meta property="og:title" content="#NewPalmyra City Overlay" />
+		<meta property="og:type" content="website" />
+		<meta property="og:description" content="Overlaying Palmyra's city plan from excavation notes on current satellite imagery." />
+		<meta name="description" content="Overlaying Palmyra's city plan from excavation notes on current satellite imagery." />
+		<meta property="fb:admins" content="36800015" />
+		<meta name="twitter:site" content="@imrehg"/>
+		<title>#NewPalmyra Map Overlay</title>
+		<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		#map {
+			height: 100%;
+		}
+
+		#panel {
+			position: absolute;
+			top: 10px;
+			left: 20%;
+			z-index: 5;
+			background-color: #fff;
+			padding: 5px;
+			border: 1px solid #999;
+			text-align: center;
+		}
+
+		#panel, .panel {
+			font-family: 'Roboto','sans-serif';
+			line-height: 30px;
+			padding-left: 10px;
+		}
+
+		#panel select, #panel input, .panel select, .panel input {
+			font-size: 15px;
+		}
+
+		#panel i, .panel i {
+			font-size: 12px;
+		}
+
+		input#opacity {
+			vertical-align: middle;
+		}
+
+		</style>
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	</head>
+	<body>
+
+		<!-- [START region_toolbar] -->
+		<!-- Add an input button to initiate the toggle method on the overlay. -->
+		<div id ="panel">
+			<input type="button" value="Toggle visibility" onclick="toggleVisibility();"></input>
+			<label for="opacity">Opacity:</label>
+			<input type="range" id="opacity" name="opacity" min="0" max="10" value="7" onchange="updateOpacity()"></input>
+			<span><a href="http://www.newpalmyra.org/">#NewPalmira</a>;</span>
+			<span>Made by <a href="https://gergely.imreh.net/">Gergely Imreh</a></span>
+		</div>
+		<!-- [END region_toolbar] -->
+
+
+		<div id="map"></div>
+		<script>
+
+		var historicalOverlay;
+		var map;
+
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 16,
+				center: {lat: 34.552433, lng: 38.267658},
+				mapTypeId: google.maps.MapTypeId.SATELLITE
+			});
+
+			var imageBounds = {
+				north: 34.558433,
+				south: 34.544433000000005,
+				east: 38.28084503892236,
+				west: 38.25447096107764
+			};
+
+			<!-- Map image source: ??? (lost notes) -->
+			historicalOverlay = new google.maps.GroundOverlay(
+				'palmyra2_rot.png',
+				imageBounds);
+			historicalOverlay.setMap(map);
+			historicalOverlay.setOpacity(0.7);
+		}
+
+		var toggleVisibility = function() {
+			if (historicalOverlay.getMap()) {
+				historicalOverlay.setMap(null);
+			} else {
+				historicalOverlay.setMap(map);
+			}
+		};
+
+		var opacitySlider;
+		var updateOpacity = function() {
+			historicalOverlay.setOpacity( opacitySlider.val() / 10 );
+		};
+
+		$(document).ready(function() {
+			opacitySlider = $("#opacity");
+		});
+
+		
+		</script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgY_yYbkcMMAMaIzkV2-wcUPkpP_78-24&callback=initMap&signed_in=true" async defer>
+		</script>
+	</body>
+</html>
