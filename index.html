@@ -53,6 +53,10 @@
 			vertical-align: middle;
 		}
 
+		#map > div > div > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div > img {
+			background: #f8f8ff;
+		}
+
 		</style>
 		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 	</head>
@@ -84,15 +88,15 @@
 			});
 
 			var imageBounds = {
-				north: 34.558433,
-				south: 34.544433000000005,
-				east: 38.28084503892236,
-				west: 38.25447096107764
+				north: 34.565115793103445,
+				south: 34.532056000000004,
+				east: 38.300495016,
+				west: 38.242137144
 			};
 
 			<!-- Map image source: ??? (lost notes) -->
 			historicalOverlay = new google.maps.GroundOverlay(
-				'palmyra2_rot.png',
+				'palmyra_master.svg',
 				imageBounds);
 			historicalOverlay.setMap(map);
 			historicalOverlay.setOpacity(0.7);
